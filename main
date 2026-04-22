@@ -1,0 +1,98 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Tarefa {
+    String nome;
+    boolean concluida;
+
+    Tarefa(String nome) {
+        this.nome = nome;
+        this.concluida = false;
+    }
+}
+
+public class Main {
+
+    static ArrayList<Tarefa> tarefas = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        while (true) {
+            System.out.println("\n1 - Adicionar tarefa");
+            System.out.println("2 - Listar tarefas");
+            System.out.println("3 - Concluir tarefa");
+            System.out.println("4 - Remover tarefa");
+            System.out.println("5 - Sair");
+
+            System.out.print("Escolha: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // limpar buffer
+
+            switch (opcao) {
+                case 1:
+                    adicionarTarefa();
+                    break;
+                case 2:
+                    listarTarefas();
+                    break;
+                case 3:
+                    concluirTarefa();
+                    break;
+                case 4:
+                    removerTarefa();
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Opção inválida");
+            }
+        }
+    }
+
+    static void adicionarTarefa() {
+        System.out.print("Nome da tarefa: ");
+        String nome = scanner.nextLine();
+
+        tarefas.add(new Tarefa(nome));
+        System.out.println("Tarefa adicionada!");
+    }
+
+    static void listarTarefas() {
+        if (tarefas.isEmpty()) {
+            System.out.println("Nenhuma tarefa.");
+            return;
+        }
+
+        for (int i = 0; i < tarefas.size(); i++) {
+            Tarefa t = tarefas.get(i);
+            System.out.println(i + " - " + t.nome + (t.concluida ? " ✔" : ""));
+        }
+    }
+
+    static void concluirTarefa() {
+        listarTarefas();
+        System.out.print("Digite o número da tarefa: ");
+        int index = scanner.nextInt();
+
+        if (index >= 0 && index < tarefas.size()) {
+            tarefas.get(index).concluida = true;
+            System.out.println("Tarefa concluída!");
+        } else {
+            System.out.println("Índice inválido");
+        }
+    }
+
+    static void removerTarefa() {
+        listarTarefas();
+        System.out.print("Digite o número da tarefa: ");
+        int index = scanner.nextInt();
+
+        if (index >= 0 && index < tarefas.size()) {
+            tarefas.remove(index);
+            System.out.println("Tarefa removida!");
+        } else {
+            System.out.println("Índice inválido");
+        }
+    }
+}
